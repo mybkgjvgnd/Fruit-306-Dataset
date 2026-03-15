@@ -58,30 +58,23 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/sample_hq_01.jpg" width="200" alt="High Quality Example"/>
-        <br><i>Red Delicious Apple</i>
+        <img src="assets/木瓜_0258.jpeg" width="200" alt="High Quality Example"/>
+        <br><i>Papaya</i>
       </td>
       <td align="center">
-        <img src="assets/sample_def_01.jpg" width="200" alt="Defective Example"/>
-        <br><i>Bruised Pear</i>
-      </td>
-      <td align="center">
-        <img src="assets/sample_flaw_01.jpg" width="200" alt="Flawed Example"/>
-        <br><i>Occluded Orange</i>
+        <img src="assets/蔓越莓_01.jpg" width="200" alt="High Quality Example"/>
+        <br><i>蔓越莓</i>
       </td>
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/sample_hq_02.jpg" width="200" alt="High Quality Example 2"/>
-        <br><i>Fresh Strawberry</i>
+        <img src="assets/青橙_0146.jpg" width="200" alt="High Quality Example 2"/>
+        <br><i>Green Orange</i>
       </td>
       <td align="center">
-        <img src="assets/sample_def_02.jpg" width="200" alt="Defective Example 2"/>
-        <br><i>Spotted Banana</i>
+        <img src="assets/青苹果_0442.jpg" width="200" alt="High Quality Example 2"/>
+        <br><i>Green Apple</i>
       </td>
-      <td align="center">
-        <img src="assets/sample_flaw_02.jpg" width="200" alt="Flawed Example 2"/>
-        <br><i>Rotting Peach</i>
       </td>
     </tr>
   </table>
