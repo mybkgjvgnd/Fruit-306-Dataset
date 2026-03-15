@@ -54,7 +54,6 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
     <tr>
       <td align="center"><b>High-Quality</b><br><i>(Clear features)</i></td>
       <td align="center"><b>Defective</b><br><i>(Minor bruises/scars)</i></td>
-      <td align="center"><b>Flawed</b><br><i>(Severe damage/occlusion)</i></td>
     </tr>
     <tr>
       <td align="center">
