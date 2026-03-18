@@ -56,15 +56,15 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/01.jpg" width="180" alt="Red Fuji Apple"/>
+        <img src="assets/01.png" width="180" alt="Red Fuji Apple"/>
         <br><i>cloudberry</i>
       </td>
       <td align="center">
-        <img src="assets/02.jpg" width="180" alt="Green Apple"/>
+        <img src="assets/02.png" width="180" alt="Green Apple"/>
         <br><i>blueberry</i>
       </td>
       <td align="center">
-        <img src="assets/03.jpg" width="180" alt="Snake Apple"/>
+        <img src="assets/03.png" width="180" alt="Snake Apple"/>
         <br><i>dewberry</i>
       </td>
     </tr>
@@ -73,15 +73,15 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/04.jpg" width="180" alt="Navel Orange"/>
+        <img src="assets/04.png" width="180" alt="Navel Orange"/>
         <br><i>sweet_orange</i>
       </td>
       <td align="center">
-        <img src="assets/05.jpg" width="180" alt="Green Orange"/>
+        <img src="assets/05.png" width="180" alt="Green Orange"/>
         <br><i>lime</i>
       </td>
       <td align="center">
-        <img src="assets/06.jpg" width="180" alt="Pomelo"/>
+        <img src="assets/06.jpeg" width="180" alt="Pomelo"/>
         <br><i>green_orange</i>
       </td>
     </tr>
