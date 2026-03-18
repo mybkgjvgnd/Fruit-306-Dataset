@@ -47,75 +47,117 @@ Unlike existing datasets that suffer from limited classes, synthetic backgrounds
 
 ## 🖼️ Sample Visualization
 
-Below are representative examples from the Fruit-306 dataset, showcasing the diversity in categories, quality grades (High-quality, Defective, Flawed), and environmental conditions.
+Below are representative examples from the Fruit-306 dataset, showcasing the diversity across **different growth stages**, **environmental conditions**, and **fine-grained categories**.
 
 <div align="center">
   <table>
     <tr>
-      <td align="center"><b>High-Quality</b><br><i>(Clear features)</i></td>
-      <td align="center"><b>Defective</b><br><i>(Minor bruises/scars)</i></td>
+      <td colspan="3" align="center"><b>🍎 Apple Varieties - Fine-Grained Differences</b></td>
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/木瓜_0258.jpeg" width="200" alt="High Quality Example"/>
-        <br><i>Papaya</i>
+        <img src="assets/01.jpg" width="180" alt="Red Fuji Apple"/>
+        <br><i>cloudberry</i>
       </td>
       <td align="center">
-        <img src="assets/蔓越莓_01.jpg" width="200" alt="High Quality Example"/>
-        <br><i>蔓越莓</i>
+        <img src="assets/02.jpg" width="180" alt="Green Apple"/>
+        <br><i>blueberry</i>
+      </td>
+      <td align="center">
+        <img src="assets/03.jpg" width="180" alt="Snake Apple"/>
+        <br><i>dewberry</i>
       </td>
     </tr>
     <tr>
+      <td colspan="3" align="center"><b>🍊 Citrus Varieties - Shape & Color Variations</b></td>
+    </tr>
+    <tr>
       <td align="center">
-        <img src="assets/青橙_0146.jpg" width="200" alt="High Quality Example 2"/>
-        <br><i>Green Orange</i>
+        <img src="assets/04.jpg" width="180" alt="Navel Orange"/>
+        <br><i>sweet_orange</i>
       </td>
       <td align="center">
-        <img src="assets/青苹果_0442.jpg" width="200" alt="High Quality Example 2"/>
-        <br><i>Green Apple</i>
+        <img src="assets/05.jpg" width="180" alt="Green Orange"/>
+        <br><i>lime</i>
       </td>
+      <td align="center">
+        <img src="assets/06.jpg" width="180" alt="Pomelo"/>
+        <br><i>green_orange</i>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center"><b>🌱 Different Growth Stages & Scenes</b></td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="assets/07.jpg" width="180" alt="Unripe Strawberry"/>
+        <br><i>Strawberry (Unripe)</i>
+      </td>
+      <td align="center">
+        <img src="assets/08.jpg" width="180" alt="Ripe Strawberry"/>
+        <br><i>Strawberry (Ripe)</i>
+      </td>
+      <td align="center">
+        <img src="assets/09.jpg" width="180" alt="Strawberry Harvest Scene"/>
+        <br><i>Strawberry (Harvest Scene)</i>
       </td>
     </tr>
   </table>
-  <p><i>Figure 1: Examples across different quality grades and categories. The dataset includes complex backgrounds and varying lighting conditions.</i></p>
 </div>
 
 <div align="center">
-  <img src="assets/long_tail_dist.png" alt="Long-Tail Distribution Chart" width="600"/>
-  <p><i>Figure 2: The long-tail distribution of the 306 fruit classes.</i></p>
+  <table>
+    <tr>
+      <td align="center">
+        <img src="assets/class_distribution.png" alt="Class Distribution" width="400"/>
+        <br><i>Figure 2: Long-tail distribution across 306 fruit classes</i>
+      </td>
+      <td align="center">
+        <img src="assets/growth_stage_dist.png" alt="Growth Stage Distribution" width="400"/>
+        <br><i>Figure 3: Distribution of different growth stages in the dataset</i>
+      </td>
+    </tr>
+  </table>
 </div>
 
-*(Note: Please ensure you place your sample images in the `assets/` folder and update the filenames in the table above if necessary.)*
+> **Key Features Demonstrated:**
+> - **Fine-grained distinctions** between visually similar varieties (e.g., different apple types)
+> - **Temporal diversity** capturing fruits from unripe to ripe stages
+> - **Environmental variability** including natural occlusions, complex orchard backgrounds, and lighting changes
+> - **Real-world conditions** that challenge traditional classification models
+
+*(Note: Please replace the example image paths with your actual dataset samples. Recommended to include 2-3 representative images per fruit category showing different conditions.)*
+
 ## 📥 Download & Preparation
 
-Due to the large size of the dataset (~50GB+), the image files are hosted externally. Please download them using the links below and organize the directory structure as shown.
+Due to the large size of the dataset (~23GB+), the image files are hosted externally. Please download them using the links below and organize the directory structure as shown.
 
 ### 1. Download Links
 
 | Source | Link | Notes |
 | :--- | :--- | :--- |
-| **Hugging Face** | [Coming Soon / Link] | Recommended for programmatic access |
-| **Google Drive** | [Link] | Full dataset archive |
-| **Baidu Netdisk** | [Link] (Code: `xxxx`) | For users in China |
+| **Baidu Netdisk** | [点击下载](https://pan.baidu.com/s/18K6sAzKoBi-LBsXQcYLg6w?pwd=th9a) (提取码: `th9a`) | For users in China |
 
 ### 2. Directory Structure
 
 After downloading, please organize your local directory as follows:
 
 ```text
+After downloading, please organize your local directory as follows:
+
+```text
 Fruit-306/
-├── images/              # Extracted images organized by class or flat structure
+├── train/                # Training images organized by class folders
+│   ├── class_001/        # Fruit class 1 folder
+│   ├── class_002/        # Fruit class 2 folder
+│   └── ...                # Other fruit class folders (total 306 classes)
+├── val/                  # Validation images organized by class folders
 │   ├── class_001/
 │   ├── class_002/
 │   └── ...
-├── annotations/         # JSON files for BBox and Segmentation (COCO format)
-│   ├── train.json
-│   ├── val.json
-│   └── test.json
-├── texts/               # Text descriptions
-│   └── descriptions.json
-├── splits/              # Train/Val/Test split lists
-│   ├── train.txt
-│   ├── val.txt
-│   └── test.txt
-└── class_names.txt      # Mapping of ID to Class Name
+├── test/                 # Test images organized by class folders
+│   ├── class_001/
+│   ├── class_002/
+│   └── ...
+├── fruit_name_mapping.txt # Mapping of class IDs to fruit names
+└── dataset_info.txt       # Dataset statistics and metadata
