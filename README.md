@@ -81,7 +81,7 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
         <br><i>lime</i>
       </td>
       <td align="center">
-        <img src="assets/06.jpeg" width="180" alt="Pomelo"/>
+        <img src="assets/06.png" width="180" alt="Pomelo"/>
         <br><i>green_orange</i>
       </td>
     </tr>
@@ -90,7 +90,7 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
     </tr>
     <tr>
       <td align="center">
-        <img src="assets/07.jpg" width="180" alt="Unripe Strawberry"/>
+        <img src="assets/07.jpeg" width="180" alt="Unripe Strawberry"/>
         <br><i>Strawberry (Unripe)</i>
       </td>
       <td align="center">
@@ -109,12 +109,8 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
   <table>
     <tr>
       <td align="center">
-        <img src="assets/class_distribution.png" alt="Class Distribution" width="400"/>
-        <br><i>Figure 2: Long-tail distribution across 306 fruit classes</i>
-      </td>
-      <td align="center">
-        <img src="assets/growth_stage_dist.png" alt="Growth Stage Distribution" width="400"/>
-        <br><i>Figure 3: Distribution of different growth stages in the dataset</i>
+        <img src="assets/10.png" alt="Class Distribution" width="400"/>
+        <br><i>Figure: Long-tail distribution across 306 fruit classes</i>
       </td>
     </tr>
   </table>
