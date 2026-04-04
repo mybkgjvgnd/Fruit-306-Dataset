@@ -26,7 +26,7 @@
 *   🤖 **FruitEnsemble Framework**: A novel dynamic two-stage framework using MLLM (Qwen-VL-Plus) as an arbiter for ambiguous samples
 
 ---
-# 🍎 Fruit-306 Dataset: Complete English Variety List
+# Fruit-306 Dataset: Complete English Variety List
 
 This document lists all **306 fruit categories** included in the **Fruit-306 Dataset**. Every entry is classified as a **fruit** based on botanical definitions (developing from the ovary of a flower) or standard computer vision fruit recognition benchmarks.
 
@@ -251,3 +251,81 @@ Below are representative examples from the Fruit-306 dataset, showcasing the div
 | + Test-Time Augmentation | ✓ | ✓ | - | 68.92 |
 | **+ LLM Arbitration (Ours)** | ✓ | ✓ | ✓ | **70.49** |
 
+## 🧠 Core Highlight: Dynamic MLLM-Guided Arbitration
+
+The most significant methodological innovation of **FruitEnsemble** is our **Dynamic Prompt Generation** strategy. Instead of forcing the MLLM to memorize 306 fruit classes (which often leads to severe hallucinations), our system operates on a **Retrieval-Augmented** mechanism based on our expert-curated botanical database.
+
+When the visual ensemble is uncertain (e.g., confidence < 0.6), it outputs a Top-$K$ ($K=3$) candidate list. Our system dynamically retrieves the botanical descriptions for *only these 3 candidates* and injects them into the prompt. The MLLM then acts purely as an arbitrator using **Chain-of-Thought (CoT)** reasoning.
+
+### 1. Expert-Curated Botanical Database (Snippet)
+To support fine-grained multi-modal reasoning, we built a comprehensive textual database containing detailed morphological descriptions for all 306 categories. Below is a snippet of our JSON database demonstrating the level of expert detail—capturing textures, calyx structures, lenticels, and unique shapes:
+
+```json
+{
+  "001 Ambarella": "Ambarella is an oval or egg-shaped fruit. When ripe, it is golden to orange-yellow. The skin is smooth and slightly waxy, with a distinct persistent calyx at the apex and a slightly depressed navel.",
+  "038 Cactus_Fruit": "The cactus fruit is oval or egg-shaped. When ripe, it turns purplish-red to dark red. The skin is densely covered with fine glochids (hair-like spines) and a waxy white bloom, often retaining a dried calyx at the apex, with a slightly uneven surface.",
+  "044 Buddha's_Hand": "Buddha's Hand is shaped like open, finger-like segmented lobes. When ripe, it is bright yellow. The skin is rough with distinct bumpy textures and oil glands. The tips of the lobes are often slightly curved, emitting a strong lemon fragrance.",
+  "048 Kiwano": "Kiwano is oval or short egg-shaped. When ripe, it is orange-yellow. The skin is covered with hard, cone-shaped horn-like protrusions, resembling a sea urchin. The apex is slightly pointed, with an obvious waxy gloss on the surface.",
+  "064 Jaboticaba": "Jaboticaba is spherical. When ripe, it is shiny purplish-black. The skin is smooth with a waxy gloss. The fruits grow densely and directly on the tree trunk. A single fruit is about 1-2.5 cm in diameter, occasionally with subtle light-colored spots on the surface.",
+  "080 Mangosteen": "Mangosteen is spherical. When ripe, the rind is dark purplish-red, smooth, and hard. The apex has 4 thick green calyx lobes, and the stem end often has a light brown ring-like mark.",
+  "119 Durian": "Durian is ellipsoid-shaped. When ripe, the husk is greenish-yellow to brownish-yellow, densely covered with hard, cone-shaped sharp thorns. The base of the thorns is thick and the tips are sharp. The overall bumpy texture is strong, and the fruit stalk is thick and prominent.",
+  "188 Rambutan": "Rambutan is oval to nearly spherical. When ripe, the skin is bright red, densely covered with soft, translucent red fleshy spine-like protrusions (spinterns) about 1-2 cm long, slightly curved at the tips, with bases connecting into a reticulated ridge.",
+  "222 Snake_Fruit": "Snake fruit is oval to egg-shaped. When ripe, it is orange-red to brownish-red. The skin is covered with scale-like protrusions resembling snake skin. The texture is rough, and the apex often retains the calyx.",
+  "240 Sugar_Apple": "Sugar Apple is conical or heart-shaped. When ripe, it is yellowish-green. The skin is covered with regularly raised knobby scales, resembling the head of Buddha. The tips of the scales are slightly depressed, giving it an overall distinct bumpy feel."
+}
+```
+*(Note: These high-quality textual priors guide the MLLM to focus on subtle discriminative features like textures, lenticels, and calyx structures, rather than generic global patterns).*
+
+### 2. The Dynamic Prompt Template
+
+```python
+# MLLM_PROMPT_TEMPLATE
+PROMPT_TEMPLATE = """
+You are an expert agricultural botanist. An ensemble of visual models has predicted the Top-3 most likely candidate cultivars for the provided fruit image. 
+
+Due to high visual similarity, your expertise is required. Please base your decision **STRICTLY** on the textual botanical priors provided below.
+
+### Retrieved Botanical Priors for Top-3 Candidates:
+{dynamic_botanical_priors}
+
+### Your Task (Chain-of-Thought Reasoning):
+1. **Visual Attribute Extraction**: Identify discriminative visual features of the fruit in the image (e.g., shape, peel texture, lenticels/oil glands, calyx structure).
+2. **Prior Matching & Exclusion**: Compare your extracted features against the botanical priors provided above. Explicitly state which features support a candidate and which contradict a candidate.
+3. **Conclusion**: Select the single most accurate cultivar. Do NOT hallucinate classes outside the candidates.
+
+### Output JSON Format:
+{{
+  "step1_visual_attributes": "...",
+  "step2_matching_reasoning": "...",
+  "final_prediction": "..."
+}}
+"""
+```
+
+### 3. Full Case Study: Resolving Fine-Grained Ambiguity
+
+*Imagine the visual ensemble is given an image of a Sweet Orange, but due to lighting and camera angle, it is confused between three visually similar citrus fruits.*
+
+**🔹 Step A: Visual Ensemble Output**
+The router detects low confidence and outputs Top-3 candidates: `["155 Sweet_Orange", "111 Mandarin", "112 Pomelo"]`.
+
+**🔹 Step B: Dynamic DB Retrieval**
+The system automatically queries our JSON botanical database and populates `{dynamic_botanical_priors}` using the exact expert descriptions:
+
+```text
+- 155 Sweet_Orange: The sweet orange is perfectly spherical or slightly oblate. When ripe, the peel is orange-red to orange-yellow. The surface is smooth and delicate, with fine oil glands, occasionally showing shallow grooves and a small depression at the navel.
+- 111 Mandarin: The mandarin is oblate or nearly spherical. When ripe, the peel is orange-red to bright orange. The surface is smooth with slightly raised oil glands, often with fine reticulated patterns. The apex is slightly depressed, and the stem base slightly protrudes.
+- 112 Pomelo: The pomelo is oblate or pear-shaped. When ripe, the peel is yellowish-green to bright yellow. The surface is rough and highly bumpy, densely covered with obvious oil glands, often with a waxy gloss. The fruit apex has radial shallow grooves.
+```
+
+**🔹 Step C: MLLM Arbitration Output (Actual System Response)**
+
+```json
+{
+  "step1_visual_attributes": "The fruit in the image has a perfectly spherical shape with an orange-yellow skin. The surface texture is very smooth and delicate, with very fine, subtle oil glands. The stem base does not protrude, and the skin does not appear rough or pear-shaped.",
+  "step2_matching_reasoning": "The 'smooth and delicate surface with fine oil glands' and 'spherical shape' directly support the prior for '155 Sweet_Orange'. The lack of a 'protruding stem base' and 'flat round shape' contradicts the description of '111 Mandarin'. Furthermore, the absence of a 'pear shape' and 'rough, highly bumpy surface with obvious oil glands' clearly excludes '112 Pomelo'.",
+  "final_prediction": "155 Sweet_Orange"
+}
+```
+
+> *Result: The MLLM successfully corrects the ensemble's uncertainty by grounding its visual reasoning strictly in the retrieved expert botanical text!*
